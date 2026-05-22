@@ -8,6 +8,17 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Modernized dark theme for the main Limbo x86 activity. -->
+    <style name="Theme.LimboX86" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">#0A0E1A</item>
+        <item name="android:windowBackground">#0A0E1A</item>
+        <item name="android:textColorPrimary">#ECEFF4</item>
+        <item name="android:textColorSecondary">#B0BEC5</item>
+    </style>
+
     <style name="Transparent" parent="@android:style/Theme.Dialog"></style>
 
     <style name="leftEllipsisSpinnerDropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3f51b5</color>
+    <!-- App primary palette (overridden per-arch module) -->
+    <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Card/section surface used by drawable/border.xml -->
+    <color name="cardStroke">#3F51B5</color>
+    <color name="cardBackgroundStart">#332238FF</color>
+    <color name="cardBackgroundEnd">#141B2BFF</color>
+    <color name="sectionTitle">#00E5FF</color>
+    <color name="sectionDivider">#1F3F51B5</color>
 </resources>

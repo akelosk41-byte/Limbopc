@@ -69,6 +69,8 @@ import com.max2idea.android.limbo.links.LinksManager;
 import com.max2idea.android.limbo.log.Logger;
 import com.max2idea.android.limbo.machine.ArchDefinitions;
 import com.max2idea.android.limbo.machine.BIOSImporter;
+import com.max2idea.android.limbo.machine.CpuModel;
+import com.max2idea.android.limbo.machine.MachineTypeModel;
 import com.max2idea.android.limbo.machine.Machine;
 import com.max2idea.android.limbo.machine.Machine.FileType;
 import com.max2idea.android.limbo.machine.MachineAction;
@@ -336,7 +338,8 @@ public class LimboActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (getMachine() == null)
                     return;
-                String cpu = (String) ((ArrayAdapter<?>) mCPU.getAdapter()).getItem(position);
+                Object item = ((ArrayAdapter<?>) mCPU.getAdapter()).getItem(position);
+                String cpu = (item instanceof CpuModel) ? ((CpuModel) item).getQemuId() : String.valueOf(item);
                 notifyFieldChange(MachineProperty.CPU, cpu);
             }
 
@@ -348,7 +351,8 @@ public class LimboActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (getMachine() == null)
                     return;
-                String machineType = (String) ((ArrayAdapter<?>) mMachineType.getAdapter()).getItem(position);
+                Object item = ((ArrayAdapter<?>) mMachineType.getAdapter()).getItem(position);
+                String machineType = (item instanceof MachineTypeModel) ? ((MachineTypeModel) item).getQemuId() : String.valueOf(item);
                 notifyFieldChange(MachineProperty.MACHINETYPE, machineType);
             }
 
@@ -1859,8 +1863,16 @@ public class LimboActivity extends AppCompatActivity
         if (clear || getMachine() == null || mMachine.getSelectedItemPosition() < 2)
             mCPUSectionSummary.setText("");
         else {
-            String text = "Machine Type: " + getMachine().getMachineType()
-                    + ", CPU: " + getMachine().getCpu()
+            Object selectedCpu = mCPU != null ? mCPU.getSelectedItem() : null;
+            String cpuLabel = (selectedCpu instanceof CpuModel)
+                    ? ((CpuModel) selectedCpu).getDisplayName()
+                    : getMachine().getCpu();
+            Object selectedMt = mMachineType != null ? mMachineType.getSelectedItem() : null;
+            String mtLabel = (selectedMt instanceof MachineTypeModel)
+                    ? ((MachineTypeModel) selectedMt).getDisplayName()
+                    : getMachine().getMachineType();
+            String text = "Machine Type: " + mtLabel
+                    + ", CPU: " + cpuLabel
                     + ", " + getMachine().getCpuNum() + " CPU" + ((getMachine().getCpuNum() > 1) ? "s" : "")
                     + ", " + getMachine().getMemory() + " MB";
             if (mEnableMTTCG.isChecked())
@@ -2553,26 +2565,37 @@ public class LimboActivity extends AppCompatActivity
     }
 
     private void populateCPUs(String cpu) {
-        ArrayList<String> arrList = ArchDefinitions.getCpuValues(this);
-        ArrayAdapter<String> cpuAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, arrList);
+        ArrayList<CpuModel> arrList = ArchDefinitions.getCpuValues(this);
+        ArrayAdapter<CpuModel> cpuAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, arrList);
         cpuAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         mCPU.setAdapter(cpuAdapter);
         mCPU.invalidate();
-        int pos = cpuAdapter.getPosition(cpu);
-        if (pos >= 0) {
-            mCPU.setSelection(pos);
+        if (cpu == null) return;
+        for (int i = 0; i < arrList.size(); i++) {
+            if (arrList.get(i).getQemuId().equals(cpu)) {
+                mCPU.setSelection(i);
+                return;
+            }
         }
     }
 
     private void populateMachineType(String machineType) {
-        ArrayList<String> arrList = ArchDefinitions.getMachineTypeValues(this);
+        ArrayList<MachineTypeModel> arrList = ArchDefinitions.getMachineTypeValues(this);
 
-        ArrayAdapter<String> machineTypeAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, arrList);
+        ArrayAdapter<MachineTypeModel> machineTypeAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, arrList);
         machineTypeAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         mMachineType.setAdapter(machineTypeAdapter);
 
         mMachineType.invalidate();
-        int pos = machineTypeAdapter.getPosition(machineType);
+        int pos = -1;
+        if (machineType != null) {
+            for (int i = 0; i < arrList.size(); i++) {
+                if (arrList.get(i).getQemuId().equals(machineType)) {
+                    pos = i;
+                    break;
+                }
+            }
+        }
         mMachineType.setSelection(Math.max(pos, 0));
 
     }
