@@ -70,6 +70,7 @@ import com.max2idea.android.limbo.log.Logger;
 import com.max2idea.android.limbo.machine.ArchDefinitions;
 import com.max2idea.android.limbo.machine.BIOSImporter;
 import com.max2idea.android.limbo.machine.CpuModel;
+import com.max2idea.android.limbo.machine.MachineTypeModel;
 import com.max2idea.android.limbo.machine.Machine;
 import com.max2idea.android.limbo.machine.Machine.FileType;
 import com.max2idea.android.limbo.machine.MachineAction;
@@ -350,7 +351,8 @@ public class LimboActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if (getMachine() == null)
                     return;
-                String machineType = (String) ((ArrayAdapter<?>) mMachineType.getAdapter()).getItem(position);
+                Object item = ((ArrayAdapter<?>) mMachineType.getAdapter()).getItem(position);
+                String machineType = (item instanceof MachineTypeModel) ? ((MachineTypeModel) item).getQemuId() : String.valueOf(item);
                 notifyFieldChange(MachineProperty.MACHINETYPE, machineType);
             }
 
@@ -1865,7 +1867,11 @@ public class LimboActivity extends AppCompatActivity
             String cpuLabel = (selectedCpu instanceof CpuModel)
                     ? ((CpuModel) selectedCpu).getDisplayName()
                     : getMachine().getCpu();
-            String text = "Machine Type: " + getMachine().getMachineType()
+            Object selectedMt = mMachineType != null ? mMachineType.getSelectedItem() : null;
+            String mtLabel = (selectedMt instanceof MachineTypeModel)
+                    ? ((MachineTypeModel) selectedMt).getDisplayName()
+                    : getMachine().getMachineType();
+            String text = "Machine Type: " + mtLabel
                     + ", CPU: " + cpuLabel
                     + ", " + getMachine().getCpuNum() + " CPU" + ((getMachine().getCpuNum() > 1) ? "s" : "")
                     + ", " + getMachine().getMemory() + " MB";
@@ -2574,14 +2580,22 @@ public class LimboActivity extends AppCompatActivity
     }
 
     private void populateMachineType(String machineType) {
-        ArrayList<String> arrList = ArchDefinitions.getMachineTypeValues(this);
+        ArrayList<MachineTypeModel> arrList = ArchDefinitions.getMachineTypeValues(this);
 
-        ArrayAdapter<String> machineTypeAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, arrList);
+        ArrayAdapter<MachineTypeModel> machineTypeAdapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, arrList);
         machineTypeAdapter.setDropDownViewResource(R.layout.custom_spinner_dropdown_item);
         mMachineType.setAdapter(machineTypeAdapter);
 
         mMachineType.invalidate();
-        int pos = machineTypeAdapter.getPosition(machineType);
+        int pos = -1;
+        if (machineType != null) {
+            for (int i = 0; i < arrList.size(); i++) {
+                if (arrList.get(i).getQemuId().equals(machineType)) {
+                    pos = i;
+                    break;
+                }
+            }
+        }
         mMachineType.setSelection(Math.max(pos, 0));
 
     }

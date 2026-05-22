@@ -167,28 +167,39 @@ public class ArchDefinitions {
         return arrList;
     }
 
-    public static ArrayList<String> getMachineTypeValues(Context context) {
-        ArrayList<String> arrList = new ArrayList<>();
+    public static ArrayList<MachineTypeModel> getMachineTypeValues(Context context) {
+        ArrayList<MachineTypeModel> arrList = new ArrayList<>();
+        String[] raw = null;
+        boolean prependDefault = true;
         switch (LimboApplication.arch) {
             case x86:
             case x86_64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.x86_machine_types)));
+                raw = Installer.getAttrs(context, R.raw.x86_machine_types);
                 break;
             case arm:
             case arm64:
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.arm_machine_types)));
+                raw = Installer.getAttrs(context, R.raw.arm_machine_types);
+                prependDefault = false;
                 break;
             case ppc:
             case ppc64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.ppc_machine_types)));
+                raw = Installer.getAttrs(context, R.raw.ppc_machine_types);
                 break;
             case sparc:
             case sparc64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.sparc_machine_types)));
+                raw = Installer.getAttrs(context, R.raw.sparc_machine_types);
                 break;
+        }
+        if (prependDefault) {
+            arrList.add(new MachineTypeModel("Default", "Default"));
+        }
+        if (raw != null) {
+            for (String line : raw) {
+                MachineTypeModel mt = MachineTypeModel.parse(line);
+                if (mt != null) {
+                    arrList.add(mt);
+                }
+            }
         }
         return arrList;
     }
