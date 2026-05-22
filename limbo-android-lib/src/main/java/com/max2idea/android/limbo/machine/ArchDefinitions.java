@@ -155,9 +155,6 @@ public class ArchDefinitions {
                 break;
         }
 
-        if (LimboApplication.arch == Config.Arch.x86 || LimboApplication.arch == Config.Arch.x86_64
-                || LimboApplication.arch == Config.Arch.arm || LimboApplication.arch == Config.Arch.arm64)
-            arrList.add("host");
         return arrList;
     }
 
