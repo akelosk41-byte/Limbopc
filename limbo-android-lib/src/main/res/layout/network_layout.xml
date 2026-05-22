@@ -31,8 +31,10 @@
             android:gravity="center|center_vertical"
             android:padding="10dp"
             android:text="Network"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/sectionTitle"
+            android:letterSpacing="0.04" />
 
 
         <TextView

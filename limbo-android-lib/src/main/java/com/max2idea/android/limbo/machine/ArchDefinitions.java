@@ -130,34 +130,40 @@ public class ArchDefinitions {
         return machinesList;
     }
 
-    public static ArrayList<String> getCpuValues(Context context) {
-        ArrayList<String> arrList = new ArrayList<>();
+    public static ArrayList<CpuModel> getCpuValues(Context context) {
+        ArrayList<CpuModel> arrList = new ArrayList<>();
+        arrList.add(new CpuModel("Default", "Default"));
+        String[] raw = null;
         switch (LimboApplication.arch) {
             case x86:
             case x86_64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.x86_cpu)));
+                raw = Installer.getAttrs(context, R.raw.x86_cpu);
                 break;
             case arm:
             case arm64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.arm_cpu)));
+                raw = Installer.getAttrs(context, R.raw.arm_cpu);
                 break;
             case ppc:
             case ppc64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.ppc_cpu)));
+                raw = Installer.getAttrs(context, R.raw.ppc_cpu);
                 break;
             case sparc:
             case sparc64:
-                arrList.add("Default");
-                arrList.addAll(Arrays.asList(Installer.getAttrs(context, R.raw.arm_cpu)));
+                raw = Installer.getAttrs(context, R.raw.arm_cpu);
                 break;
+        }
+        if (raw != null) {
+            for (String line : raw) {
+                CpuModel cpu = CpuModel.parse(line);
+                if (cpu != null) {
+                    arrList.add(cpu);
+                }
+            }
         }
 
         if (LimboApplication.arch == Config.Arch.x86 || LimboApplication.arch == Config.Arch.x86_64
                 || LimboApplication.arch == Config.Arch.arm || LimboApplication.arch == Config.Arch.arm64)
-            arrList.add("host");
+            arrList.add(new CpuModel("host", "host"));
         return arrList;
     }
 

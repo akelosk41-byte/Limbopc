@@ -1,34 +1,27 @@
-486
-athlon
-base
-Broadwell
-Conroe
-Cooperlake
-core2duo
-coreduo
-Denverton
-Dhyana
-EPYC
-Haswell
-IvyBridge
-KnightsMill
-kvm32
-kvm64
-max
-n270
-Nehalem
-Opteron_G1
-Opteron_G2
-Opteron_G3
-Opteron_G4
-Opteron_G5
-Penryn
-pentium
-pentium2
-pentium3
-phenom
-qemu32
-qemu64
-SandyBridge
-Snowridge
-Westmere
+Intel Xeon Platinum 8380 (Ice Lake-SP, 40C/80T)|Icelake-Server
+Intel Xeon Platinum 8380H (Cooper Lake-SP, 28C/56T)|Cooperlake
+Intel Xeon Platinum 8280 (Cascade Lake-SP, 28C/56T)|Cascadelake-Server
+Intel Xeon Platinum 8180 (Skylake-SP, 28C/56T)|Skylake-Server
+Intel Core i9-10900K (Skylake-class, 10C/20T)|Skylake-Client
+Intel Core i7-1065G7 (Ice Lake, 4C/8T)|Icelake-Client
+Intel Xeon Phi 7295 (Knights Mill, 72C/288T)|KnightsMill
+Intel Xeon E7-8890 v4 (Broadwell-EX, 24C/48T)|Broadwell
+Intel Xeon E5-2699 v3 (Haswell-EP, 18C/36T)|Haswell
+Intel Xeon E5-2697 v2 (Ivy Bridge-EP, 12C/24T)|IvyBridge
+Intel Xeon E5-2690 (Sandy Bridge-EP, 8C/16T)|SandyBridge
+Intel Atom P5962B (Snow Ridge, Tremont)|Snowridge
+Intel Atom C3958 (Denverton, Goldmont, 16C)|Denverton
+Intel Xeon X7560 (Nehalem-EX, 8C/16T)|Nehalem
+Intel Xeon X5690 (Westmere-EP, 6C/12T)|Westmere
+Intel Core 2 Quad Q9650 (Penryn, 4C)|Penryn
+Intel Core 2 Duo E6850 (Conroe, 2C)|Conroe
+AMD EPYC 7H12 (Rome, Zen 2, 64C/128T)|EPYC-Rome
+AMD EPYC 7601 (Naples, Zen 1, 32C/64T, IBPB)|EPYC-IBPB
+AMD EPYC 7551 (Naples, Zen 1, 32C/64T)|EPYC
+Hygon C86 7185 (Dhyana, Zen-based, 32C/64T)|Dhyana
+AMD Opteron 6386 SE (Piledriver, 16C)|Opteron_G5
+AMD Opteron 6282 SE (Bulldozer, 16C)|Opteron_G4
+AMD Opteron 8439 SE (Istanbul, K10, 6C)|Opteron_G3
+AMD Opteron 8222 SE (Santa Rosa, K8, 2C)|Opteron_G2
+AMD Opteron 246 (SledgeHammer, K8, 1C)|Opteron_G1
+QEMU Max (all available host features)|max
