@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/screenBackground"
     android:keepScreenOn="true"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:elevation="6dp">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/scroll_layout"
@@ -21,40 +32,69 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fadeScrollbars="false">
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fadeScrollbars="false"
+            android:scrollbarStyle="outsideOverlay">
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical"
-                android:padding="15dp">
+                android:paddingLeft="12dp"
+                android:paddingTop="12dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="24dp">
 
-                <include layout="@layout/machine_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/machine_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/status_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/status_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/controls_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/controls_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/userinterface_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/userinterface_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/board_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/board_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/storage_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/storage_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/removable_storage_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/removable_storage_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/boot_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/boot_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/graphics_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/graphics_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/audio_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/audio_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/network_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/network_layout" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <include layout="@layout/advanced_layout" />
+                <com.google.android.material.card.MaterialCardView style="@style/SectionCard">
+                    <include layout="@layout/advanced_layout" />
+                </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </LinearLayout>
